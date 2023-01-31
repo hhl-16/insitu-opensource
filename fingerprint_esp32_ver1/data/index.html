@@ -1,0 +1,258 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<title>BIOMETRICS ACCESS FORKLIFT - INS B202C</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="data:,">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="src/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="src/datetimepicker.min.css" />
+
+	<script src="src/jquery-3.3.1.min.js"></script>
+	<script src="src/bootstrap.min.js"></script>
+	<script src="src/moment.min.js"></script>
+	<script src="src/datetimepicker.min.js"></script>
+	<!--<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css">-->
+	<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>-->
+	<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>-->
+
+	<script>
+
+		$(document).ready(function () {
+
+			// load thông tin file hệ thống SYS.TXT
+			jQuery.get('SYS.txt', function (data, status) {
+				if (status == "success") {
+					//alert("load success")
+					var arr = data.split('|');
+					var p = 0;
+					var f = 0;
+					for (var i in arr) {
+						if (arr[i].indexOf("FINGERPRINT") != -1) {
+							f++;
+							//alert("fingerprint= " + f);
+						}
+						if (arr[i].indexOf("PASSCODE") != -1) {
+							p++;
+							//alert("passcode= " + p);
+						}
+					}
+					$("#isFingerprintRegistered").val(f);
+					$("#isPasscodeRegistered").val(p);
+				}
+				else {
+					alert("fail loading text file")
+				}
+			});
+
+			// load thông tin file sự kiện EVENT.TXT
+			jQuery.get('EVENT.txt', function (data, status) {
+				if (status == "success") {
+					//alert("load success")
+					var arr = data.split('|');
+					var eon = 0;
+					var eoff = 0;
+					for (var i in arr) {
+						if (arr[i].indexOf("On") != -1) {
+							eon++;
+							//alert("fingerprint= " + f);
+						}
+						if (arr[i].indexOf("Off") != -1) {
+							eoff++;
+							//alert("passcode= " + p);
+						}
+					}
+					$("#isActivitiesOn").val(eon);
+					$("#isActivitiesOff").val(eoff);
+				}
+				else {
+					alert("fail loading text file")
+				}
+			});
+
+
+			$("#btnViewActivitiesOn").click(function (e) {
+				e.preventDefault();
+				window.location.replace("view-activities.html");
+			});
+
+			$("#btnViewActivitiesOff").click(function (e) {
+				e.preventDefault();
+				window.location.replace("view-activities.html");
+			});
+
+			$("#btnviewListFingerprint").click(function (e) {
+				e.preventDefault();
+				window.location.href = "view-fingerprint.html";
+			});
+
+			$("#btnviewListPasscode").click(function (e) {
+				e.preventDefault();
+				window.location.href = "view-passcode.html";
+			});
+
+
+			// button update WiFi SSID and Password is clicked
+			$("#btnUpdateWiFi").click(function (e) {
+				e.preventDefault();
+				if ($('#idWifiSsid').val() == "") {
+					alert("Vui lòng nhập WiFi SSID mới.");
+					return false;
+				} else if ($('#idWifiPassword').val() == "") {
+					alert("Vui lòng nhập WiFi password mới.");
+					return false;
+				} else if ($('#idWifiPassword').val().length < 8) {
+                    alert("Mật khẩu phải đủ 8 kí tự");
+                    return false;
+                }
+				else {
+					var mySSID = $('#idWifiSsid').val();
+					var myPassword = $('#idWifiPassword').val();
+					var urlSketch = `http://192.168.4.1/getWiFiInfo?mySsid=${mySSID},myPassword=${myPassword}`;
+					//console.log(urlSketch);
+					$.get(urlSketch, function (data) {
+						console.log(data);
+					});
+					alert("Vui lòng đợi thiết bị khởi động lại và truy cập bằng SSID mới");
+				}
+			});
+
+			// button udpate System time is clicked
+			$("#btnUpdateSystemTime").click(function (e) {
+				e.preventDefault();
+				if ($('#idSystemTime').val() == "") {
+					alert("Vui lòng nhập giờ hệ thống mới.");
+					return false;
+				} else {
+					var myNewTime = $('#idSystemTime').val();
+					var urlTimeSketch = `http://192.168.4.1/getSystemTime?mySystemTime=${myNewTime}`;
+					console.log(urlTimeSketch);
+					$.get(urlTimeSketch, function (data) {
+						console.log(data);
+					});
+					alert("Cập nhật thành công");
+				}
+			});
+
+
+			$("#btnDlListActivities").click(function (e) {
+				e.preventDefault();
+				window.location.href = "EVENT.txt";
+			});
+
+			$("#btnDlListPasscode").click(function (e) {
+				e.preventDefault();
+				window.location.href = "SYS.txt";
+			});
+
+			$("#btnDlListFingerprint").click(function (e) {
+				e.preventDefault();
+				window.location.href = "SYS.txt";
+			});
+
+		});   //$document
+
+	
+		
+		$(function () {
+                $('#idSlSystemTime').datetimepicker({
+                    format: 'DD/MM/YYYY HH:mm:ss',
+                    minDate: new Date()
+                });
+            });
+
+	</script>
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+				<h3 class="fontuse">BIOMETRICS ACCESS FORKLIFT</h3>
+				<h4 class="fontuse">Model: INS-B202C</h4>
+				<h5 class="fontuse">Mã thiết bị: <span style="font-weight: bold; font-weight: bold; background-color: khaki; padding: 3px 5px;">%STATE%</span></h5>
+				<br />
+				<div class="pd510" style="height:auto;">
+					<p class="fontuse displayInline" style="margin-right: 15px;">- Tổng SL vân tay đã đăng ký: </p>
+					<input type="text" class="form-input inputShowValue" min="0" max="200" id="isFingerprintRegistered" name="isFingerprintRegistered" disabled>
+					<input type="button" class="btn btn-md btn-info mr10" value="Xem" id="btnviewListFingerprint">
+					<!--<a href="" target="_blank" id="btnDlListFingerprint" class="btn btn-md btn-primary">Tải Fingerprint</a>-->
+				</div>
+
+				<div class="lineSepa"></div>
+
+				<div class="pd510" style="height:auto;">
+					<p class="fontuse displayInline">- Tổng SL passcode đã đăng ký: </p>
+					<input type="text" class="form-input inputShowValue" min="0" max="200" id="isPasscodeRegistered" name="isPasscodeRegistered" disabled>
+					<input type="button" id="btnviewListPasscode" class="btn btn-md btn-info mr10" value="Xem" ">
+					<!--<a href="" target="_blank" id="btnDlListPasscode" class="btn btn-md btn-primary">Tải Passcode</a>-->
+				</div>
+
+				<div class="lineSepa"></div>
+
+				<div class="pd510" style="height:auto;">
+					<p class="fontuse displayInline" style="margin-right: 63px;">- Tổng SL mở máy xe: </p>
+					<input type="text" class="form-input inputShowValue" min="0" max="200" id="isActivitiesOn" name="isActivitiesOn" disabled>
+					<input type="button" id="btnViewActivitiesOn" class="btn btn-md btn-info mr10" value="Xem">
+					<!--<a href="" target="_blank" id="btnDlListActivities" class="btn btn-md btn-primary">Tải activites</a>-->
+				</div>
+
+				<div class="lineSepa"></div>
+
+				<div class="pd510" style="height:auto;">
+					<p class="fontuse displayInline" style="margin-right: 68px;">- Tổng SL tắt máy xe: </p>
+					<input type="text" class="form-input inputShowValue" min="0" max="200" id="isActivitiesOff" name="isActivitiesOff" disabled>
+					<input type="button" id="btnViewActivitiesOff" class="btn btn-md btn-info mr10" value="Xem">
+					<!--<a href="" target="_blank" id="btnDlListActivities" class="btn btn-md btn-primary">Tải activites</a>-->
+				</div>
+
+				<div class="lineSepa"></div>
+
+				<br>
+
+
+				<div>
+					<h3>Cập nhật thông tin kết nối WiFi</h3>
+					<br>
+					<p class="fontuse">- WiFi SSID hiện tại: <strong style="font-weight: bold; background-color: cornsilk; padding: 5px 8px; margin-left: 29px; ">%currentValueWifiSSID%</strong></p>
+					<div class="form-inline" style="margin-top:5px">
+						<p class="fontuse displayInline" style="margin-right: 50px;	">- WiFi SSID mới:</p>
+						<input class="form-control" type="text" id="idWifiSsid" value="" placeholder="nhập SSID mới" />
+					</div>
+					<br>
+					<p class="fontuse">- WiFi Password hiện tại: <strong style="font-weight: bold; background-color: cornsilk; padding: 5px 8px;">%currentValueWifiPassword%</strong></p>
+					<div class="form-inline" style="margin-top:5px">
+						<p class="fontuse displayInline" style="margin-right: 23px" ;>- WiFi password mới:</p>
+						<input class="form-control" type="text" id="idWifiPassword" value="" placeholder="nhập Password mới" />
+					</div>
+					<br>
+					<input type="button" class="btn btn-primary" id="btnUpdateWiFi" value="Cập nhật" />
+				</div>
+
+				<br />
+				<div class="lineSepa"></div>
+
+				<div>
+					<h3>Cập nhật giờ hệ thống</h3>
+					<br>
+					<!-- <p class="fontuse">- Giờ hệ thống hiện tại: <strong style="font-weight: bold; background-color: cornsilk; padding: 5px 8px; margin-left: 29px; ">%currentValueSystemTime%</strong></p> -->
+					<div class="form-inline" style="margin-top:5px">
+						<p class="fontuse displayInline" style="margin-right: 50px;	">- Chọn thời gian:</p>
+						<div class='input-group' id="idSlSystemTime">
+							<input type='text' id="idSystemTime" class="form-control" />
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
+					<br>
+					<input type="button" class="btn btn-primary" id="btnUpdateSystemTime" value="Cập nhật" />
+				</div>
+			</div>
+		</div>
+	</div>
+	<iframe style="display:none" name="hidden-form"></iframe>
+	
+</body>
+</html>

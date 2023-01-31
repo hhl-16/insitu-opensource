@@ -1,0 +1,122 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<title>BIOMETRICS ACCESS FORKLIFT - INS B202C</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="data:,">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" href="src/bootstrap.min.css" />
+	<script src="src/jquery-3.3.1.min.js"></script>
+	<script src="src/bootstrap.min.js"></script>
+	<script src="src/FileSaver.js"></script>
+	<script src="src/xlsxmin.min.js"></script>
+
+	<script>
+
+		$(document).ready(function () {
+			jQuery.get('EVENT.txt', function (data, status) {
+				if (status == "success") {
+					//alert("load success")
+					var arr = data.split('|');
+					let isType, getID, getState, isTime, isUserID, isState
+
+					//$(".myTblActivities").append('<thead><tr class="noExl"><th>Loại</th><th>User ID</th><th>Trạng thái</th><th>Thời gian</th></tr></thead><tbody>');
+					$(".myTblActivities").append('<tbody><tr class"header"><th>Loại</th><th>User ID</th><th>Trạng thái</th><th>Thời gian</th></tr>');
+					for (var i in arr) {
+						//var v = `<p>${arr[i]}</p>`;
+						//$(mydata).append(v);
+
+						isType = arr[i].substring(0, arr[i].indexOf(",id="));
+						getID = arr[i].substring(arr[i].indexOf("id="), arr[i].indexOf(",state="));
+						isUserID = getID.substr(getID.indexOf("=") + 1);
+						getState = arr[i].substring(arr[i].indexOf("state="), arr[i].indexOf(",time="))
+						isState = getState.substr(getState.indexOf("=") + 1);
+						isTime = arr[i].substring(arr[i].indexOf("time=") + 5);
+						var fInfo2 = `<tr>
+																	<td>${isType}</td>
+																	<td>${isUserID}</td>
+																	<td>${isState}</td>
+																	<td>${isTime}</td>
+															</tr>`;
+						$(".myTblActivities").append(fInfo2);
+					}
+					$(".myTblActivities").append('</tbody>');
+				}
+				else {
+					alert("fail loading text file")
+				}
+			});
+
+
+			$("#btnExportExcel").click(function () {
+				var workbook = XLSX.utils.book_new();
+
+				//var worksheet_data  =  [['hello','world']];
+				//var worksheet = XLSX.utils.aoa_to_sheet(worksheet_data);
+
+				var worksheet_data = document.getElementById("myTblActivities");
+				var worksheet = XLSX.utils.table_to_sheet(worksheet_data);
+
+				workbook.SheetNames.push("InsB202CExcel");
+				workbook.Sheets["InsB202CExcel"] = worksheet;
+
+				exportExcelFile(workbook);
+			});
+
+
+		});
+
+
+		function backtomenu() {
+			window.location.replace("/");
+			// window.location.href = "index.html";
+		}
+
+		function exportExcelFile(workbook) {
+			return XLSX.writeFile(workbook, "InsB202CExcel.xlsx");
+		}
+
+	</script>
+
+</head>
+
+<body>
+
+  <div class="container">
+		<div class="row">         
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<h3 class="fontuse">BIOMETRICS ACCESS FORKLIFT</h3>
+				<h4 class="fontuse">Model: INS-B202C</h4>
+				<h5 class="fontuse">Mã thiết bị: <span style="font-weight: bold; font-weight: bold; background-color: khaki; padding: 3px 5px;">%STATE%</span></h5>
+				<br />
+
+				<div>
+					<h2>LỊCH SỬ VẬN HÀNH</h2>
+				</div>
+
+				<div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px; margin-bottom: 20px; ">
+					<input type="button" class="btn btn-sm btn-warning" value="XUẤT EXCEL" id="btnExportExcel">		
+				</div>
+
+				<iframe id="dummyFrame" style="display:none"> </iframe>
+
+				<div id="mydata"></div>
+				<br />
+
+				<div class="myActivitiesdata" id="myActivitiesdata"></div>
+
+				<table class="table table-striped table-bordered myTblActivities" id="myTblActivities">
+				</table>
+
+				<br />
+
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<input type="submit" class="btn btn-sm btn-danger" value="TRỞ VỀ" onclick="backtomenu()">
+				</div>
+
+			</div>
+		</div>
+  </div>
+  <iframe style="display:none" name="hidden-form"></iframe>
+</body>
+</html>

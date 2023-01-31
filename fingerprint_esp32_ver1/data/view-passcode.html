@@ -1,0 +1,125 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<title>BIOMETRICS ACCESS FORKLIFT - INS B202C</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="data:,">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" href="src/bootstrap.min.css" />
+	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+	<script src="src/jquery-3.3.1.min.js"></script>
+	<script src="src/bootstrap.min.js"></script>
+	<script>
+		$(document).ready(function () {
+
+			jQuery.get('SYS.txt', function (data, status) {
+				if (status == "success") {
+					//alert("load success")
+					var arr = data.split('|');
+					let getID, getName, getTime
+                    
+					for (var i in arr) {                        
+						if (arr[i].indexOf("PASSCODE") != -1) {
+							//var v = `<p>${arr[i]}</p>`;
+							//$(mydata).append(v);
+                           
+                            getID = arr[i].substring(arr[i].indexOf("id="), arr[i].indexOf(",name="))   // se la ID=01
+                            getIDonly = getID.substr(getID.indexOf("=") + 1);     // se la 01                            
+
+                            getName = arr[i].substring(arr[i].indexOf("name="), arr[i].indexOf(",time="))
+                            getNameOnly = getName.substr(getName.indexOf("=") + 1)
+                            getTime = arr[i].substring(arr[i].indexOf("time=") + 5)                            
+
+							var fInfo = `<div class="pd510" style="height:auto;">
+													<p class="fontuse displayInline">- ID: </p>
+													<input type="text" class="form-input inputShowValue bgColor03" min="0" max="200" id="isPasscodeRegistered${i}" value="${getIDonly}" name="isPasscodeRegistered" disabled>
+													<p class="fontuse displayInline">- Tên: </p>
+													<input type="text" class="form-input widthDrivername inputShowValue inputcolor-01 name" idonly="${getIDonly}" value="${getNameOnly}" id="isDrivername${i}" name="isDrivername">
+													<p class="fontuse displayInline">- Ngày tạo: </p>
+													<input type="text" class="form-input widthDrivername inputShowValue bgColor03" id="isTimeRegistered${i}" name="isTimeRegistered" value="${getTime}" disabled>
+													<input type="button" class="btn btn-md btn-warning mr10" value="Cập nhật tên" onclick="updateFingerprint(this)">
+											</div><div class="lineSepa"></div>`;
+							$(mydata2).append(fInfo);
+
+							//get ID
+							//getID = arr[i].substring(arr[i].indexOf("id="), arr[i].indexOf(",name="))
+							//get NAME
+							//getName = arr[i].substring(arr[i].indexOf("name="), arr[i].indexOf(",time="))
+							//alert(getName.substr(getName.indexOf("=") + 1))
+							//getTIME
+							//getTime = arr[i].substring(arr[i].indexOf("time=") + 5)
+							//alert(getTime)
+
+							//takeID = result.substring()
+							//alert(result)
+							//alert(getID.substr(getID.indexOf("=") + 1))
+							//alert(arr[i].search("name="))   //trả về là vị trí 16, công thêm id= nên vị trí lấy là từ 19
+
+							//$("#isPasscodeRegistered" + i).val(getID.substr(getID.indexOf("=") + 1))
+							//$("#isDrivername" + i).val(getName.substr(getName.indexOf("=") + 1))
+							//$("#isTimeRegistered" + i).val(getTime)
+						}
+					}
+				}
+				else {
+					alert("fail loading text file")
+				}
+			});
+
+		});
+
+        function updateFingerprint(d) {
+            var id = $(d).closest('div').find('input.name').attr('idonly');
+            var name = $(d).closest('div').find('input.name').val();            
+            //let url1 = `http://192.168.4.1/get?myID=${myID},myName=${myName}`;
+            var url2 = `http://192.168.4.1/get?PASSCODE${id}=${name}`;
+
+            console.log(url2);
+            $.get(url2, (d) => { confirm(d);})
+
+            window.location.href = '/view-passcode.html';
+        }
+		function backtomenu() {
+			window.location.replace("/");
+            // window.location.href = "index.html";
+		}
+
+	</script>
+
+</head>
+
+<body>
+
+  <div class="container">
+	  <div class="row">         
+		  <div class="col-md-12 col-sm-12 col-xs-12">
+		  	<h3 class="fontuse">BIOMETRICS ACCESS FORKLIFT</h3>
+		  	<h4 class="fontuse">Model: INS-B202C</h4>
+		  	<h5 class="fontuse">Mã thiết bị: <span style="font-weight: bold; font-weight: bold; background-color: khaki; padding: 3px 5px;">%STATE%</span></h5>
+
+		  	<div>
+		  		<h2> DANH SÁCH PASSCODE ĐĂNG KÝ</h2>
+		  	</div>
+
+		  	<div id="mydata"></div>
+		  	<br />
+		  	<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+		  		<div id="mydata2"></div>
+		  	</div>
+
+		  	<br />
+
+		  	<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12" style="margin-top:3%">
+		  		<input type="submit" class="btn btn-md btn-danger" value="TRỞ VỀ" onclick="backtomenu()">
+		  	</div>
+
+		  </div>
+		<div class="col-md-12 col-sm-12 col-xs-12">
+
+		</div>
+	</div>
+
+</div>
+
+</body>
+</html>
