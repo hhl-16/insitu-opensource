@@ -1,0 +1,224 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<title>PEDESTRIAN WARNING SYSTEM - INS PWS101C</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="data:,">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" href="src/bootstrap.min.css" />
+	<script src="src/jquery-3.3.1.min.js"></script>
+	<script src="src/bootstrap.min.js"></script>
+
+	<script>
+
+		$(document).ready(function () {
+
+			//mặc định get Calibration last
+			jQuery.get('CALIBRATION.txt', function (data, status) {
+				if (status == "success") {
+					console.log("load SYSTEMSTATE.txt success")
+					var myRSSI = data;
+					console.log("My RSSI = " + myRSSI)
+					$("#isRSSIReceived").val(myRSSI)
+				}
+				else {
+					alert("fail loading text file")
+				}
+			});
+
+			//xử lý sự kiện khhi button CALIBRATION được click  
+			$("#btnCalibration").click(function (e) {
+				console.log("call calibration")
+				var urlCalibration = `http://192.168.4.1/calibrateRSSI?action=calibrateNow`;
+                console.log("get URL calibration: " + urlCalibration)
+				$.get(urlCalibration, function (data, status) {
+					console.log("Data: " + data + "\nStatus: " + status);
+					if (status = "success") {
+						console.log(" thành công");
+					}
+					else if (status = "error") {
+						console.log(" thất bại");
+					}
+					else {
+						console.log("Có lỗi xảy ra, vui lòng thử lại");
+					}
+				});
+			})
+
+			//xử lý sự kiện khi Update RSSI 
+			$("#btnUpdateRSSI").click(function (e) {
+				console.log("call update RSSI list")
+				var dis1000 = $("#dis1000").val(); var dis1500 = $("#dis1500").val(); var dis2000 = $("#dis2000").val(); var dis2500 = $("#dis2500").val(); var dis3000 = $("#dis3000").val(); var dis3500 = $("#dis3500").val();
+				var dis4000 = $("#dis4000").val(); var dis4500 = $("#dis4500").val(); var dis5000 = $("#dis5000").val(); var dis5500 = $("#dis5500").val(); var dis6000 = $("#dis6000").val(); var dis6500 = $("#dis6500").val();
+				var dis7000 = $("#dis7000").val(); var dis7500 = $("#dis7500").val(); var dis8000 = $("#dis8000").val();
+				var urlUpdateRSSI = `http://192.168.4.1/setRSSI?1000=${dis1000},1500=${dis1500},2000=${dis2000},2500=${dis2500},3000=${dis3000},3500=${dis3500},4000=${dis4000},4500=${dis4500},5000=${dis5000},5500=${dis5500},6000=${dis6000},6500=${dis6500},7000=${dis7000},7500=${dis7500},8000=${dis8000}`;
+                console.log("full URL update: " + urlUpdateRSSI)
+				$.get(urlUpdateRSSI, function (data, status) {
+					console.log("Data: " + data + "\nStatus: " + status);
+					if (status = "success") {
+						console.log(" thành công");
+					}
+					else if (status = "error") {
+						console.log(" thất bại");
+					}
+					else {
+						console.log("Có lỗi xảy ra, vui lòng thử lại");
+					}
+					//});
+					console.log(urlUpdateRSSI);
+				})
+
+			});
+
+
+			function backtomenu() {
+				window.location.replace("/");
+				// window.location.href = "index.html";
+			}
+
+		});
+
+	</script>
+
+</head>
+
+<body>
+
+  <div class="container">
+		<div class="row">         
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<h3 class="fontuse">PEDESTRIAN WARNING SYSTEM</h3>
+				<h4 class="fontuse">Model: PWS-101C</h4>
+				<h5 class="fontuse">Mã thiết bị: <span style="font-weight: bold; font-weight: bold; background-color: khaki; padding: 3px 5px;">%STATE%</span></h5>
+				<br />
+
+				<div>
+					<h2>CẤU HÌNH HỆ THỐNG</h2>
+				</div>
+
+				<div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px; margin-bottom: 20px; ">
+					<!----thu thập RSSI -->
+					<div class="lineSepa"></div>
+					<div class="pd510" style="height:auto;">
+						<p class="fontuse displayInline" style="margin-right:15px">- Signal calibration: </p>
+						<input type="text" class="" style=" width: 70px; padding: 10px 10px; text-align: center; margin-right: 10px; font-size: 15px; font-weight:bold" id="isRSSIReceived" disabled="disabled" value="...." />
+						<input type="button" id="btnCalibration" class="btn btn-md btn-primary mr10" value="Scan">
+					</div>
+					<div class="lineSepa"></div>
+				</div>
+
+				<div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px; margin-bottom: 20px; ">
+					<!----cập nhật RSSI-->
+					<div class="lineSepa"></div>
+					<h3>Update Signal data</h3>
+					<div class="col-md-3 col-sm-4 col-xs-6">
+						<div class="pd510" style="height:auto;">
+							<p class="fontuse displayInline" style="margin-right:15px">- Signal at 1,000: </p>
+							<input type="text" class="" style=" width: 70px; padding: 5px 5px; text-align: center; margin-right: 10px; font-size: 12px; font-weight:bold" id="dis1000" value="" />
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-4 col-xs-6">
+						<div class="pd510" style="height:auto;">
+							<p class="fontuse displayInline" style="margin-right:15px">- Signal at 1,500: </p>
+							<input type="text" class="" style=" width: 70px; padding: 5px 5px; text-align: center; margin-right: 10px; font-size: 12px; font-weight:bold" id="dis1500" value="" />
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-4 col-xs-6">
+						<div class="pd510" style="height:auto;">
+							<p class="fontuse displayInline" style="margin-right:15px">- Signal at 2,000: </p>
+							<input type="text" class="" style=" width: 70px; padding: 5px 5px; text-align: center; margin-right: 10px; font-size: 12px; font-weight:bold" id="dis2000" value="" />
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-4 col-xs-6">
+						<div class="pd510" style="height:auto;">
+							<p class="fontuse displayInline" style="margin-right:15px">- Signal at 2,500: </p>
+							<input type="text" class="" style=" width: 70px; padding: 5px 5px; text-align: center; margin-right: 10px; font-size: 12px; font-weight:bold" id="dis2500" value="" />
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-4 col-xs-6">
+						<div class="pd510" style="height:auto;">
+							<p class="fontuse displayInline" style="margin-right:15px">- Signal at 3,000: </p>
+							<input type="text" class="" style=" width: 70px; padding: 5px 5px; text-align: center; margin-right: 10px; font-size: 12px; font-weight:bold" id="dis3000" value="" />
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-4 col-xs-6">
+						<div class="pd510" style="height:auto;">
+							<p class="fontuse displayInline" style="margin-right:15px">- Signal at 3,500: </p>
+							<input type="text" class="" style=" width: 70px; padding: 5px 5px; text-align: center; margin-right: 10px; font-size: 12px; font-weight:bold" id="dis3500" value="" />
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-4 col-xs-6">
+						<div class="pd510" style="height:auto;">
+							<p class="fontuse displayInline" style="margin-right:15px">- Signal at 4,000: </p>
+							<input type="text" class="" style=" width: 70px; padding: 5px 5px; text-align: center; margin-right: 10px; font-size: 12px; font-weight:bold" id="dis4000" value="" />
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-4 col-xs-6">
+						<div class="pd510" style="height:auto;">
+							<p class="fontuse displayInline" style="margin-right:15px">- Signal at 4,500: </p>
+							<input type="text" class="" style=" width: 70px; padding: 5px 5px; text-align: center; margin-right: 10px; font-size: 12px; font-weight:bold" id="dis4500" value="" />
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-4 col-xs-6">
+						<div class="pd510" style="height:auto;">
+							<p class="fontuse displayInline" style="margin-right:15px">- Signal at 5,000: </p>
+							<input type="text" class="" style=" width: 70px; padding: 5px 5px; text-align: center; margin-right: 10px; font-size: 12px; font-weight:bold" id="dis5000" value="" />
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-4 col-xs-6">
+						<div class="pd510" style="height:auto;">
+							<p class="fontuse displayInline" style="margin-right:15px">- Signal at 5,500: </p>
+							<input type="text" class="" style=" width: 70px; padding: 5px 5px; text-align: center; margin-right: 10px; font-size: 12px; font-weight:bold" id="dis5500" value="" />
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-4 col-xs-6">
+						<div class="pd510" style="height:auto;">
+							<p class="fontuse displayInline" style="margin-right:15px">- Signal at 6,000: </p>
+							<input type="text" class="" style=" width: 70px; padding: 5px 5px; text-align: center; margin-right: 10px; font-size: 12px; font-weight:bold" id="dis6000" value="" />
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-4 col-xs-6">
+						<div class="pd510" style="height:auto;">
+							<p class="fontuse displayInline" style="margin-right:15px">- Signal at 6,500: </p>
+							<input type="text" class="" style=" width: 70px; padding: 5px 5px; text-align: center; margin-right: 10px; font-size: 12px; font-weight:bold" id="dis6500" value="" />
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-4 col-xs-6">
+						<div class="pd510" style="height:auto;">
+							<p class="fontuse displayInline" style="margin-right:15px">- Signal at 7,000: </p>
+							<input type="text" class="" style=" width: 70px; padding: 5px 5px; text-align: center; margin-right: 10px; font-size: 12px; font-weight:bold" id="dis7000" value="" />
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-4 col-xs-6">
+						<div class="pd510" style="height:auto;">
+							<p class="fontuse displayInline" style="margin-right:15px">- Signal at 7,500: </p>
+							<input type="text" class="" style=" width: 70px; padding: 5px 5px; text-align: center; margin-right: 10px; font-size: 12px; font-weight:bold" id="dis7500" value="" />
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-4 col-xs-6">
+						<div class="pd510" style="height:auto;">
+							<p class="fontuse displayInline" style="margin-right:15px">- Signal at 8,000: </p>
+							<input type="text" class="" style=" width: 70px; padding: 5px 5px; text-align: center; margin-right: 10px; font-size: 12px; font-weight:bold" id="dis8000" value="" />
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-4 col-xs-6">
+						<input type="button" id="btnUpdateRSSI" class="btn btn-md btn-warning mr10" value="Update now">
+					</div>
+
+					<div class="lineSepa"></div>
+				</div>
+
+
+
+				<br />
+
+				<div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:40px;">
+					<input type="submit" class="btn btn-sm btn-danger" value="TRỞ VỀ" onclick="backtomenu()">
+				</div>
+
+			</div>
+		</div>
+  </div>
+  <iframe style="display:none" name="hidden-form"></iframe>
+</body>
+</html>

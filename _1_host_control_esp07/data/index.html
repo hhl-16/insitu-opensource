@@ -1,0 +1,607 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<title>PEDESTRIAN WARNING SYSTEM - INS PWS101C</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="data:,">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="src/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="src/datetimepicker.min.css" />
+
+	<script src="src/jquery-3.3.1.min.js"></script>
+	<script src="src/bootstrap.min.js"></script>
+	<script src="src/moment.min.js"></script>
+	<script src="src/datetimepicker.min.js"></script>
+
+	<script>
+
+		$(document).ready(function () {
+
+			//mặc định button toggle trạng thái box là Enable
+            jQuery.get('SYSTEMSTATE.txt', function (data, status) {
+                if (status == "success") {
+                    console.log("load SYSTEMSTATE.txt success")
+                    var myState = data; 
+					console.log("System state = " + myState)
+
+					if (myState == "ACTIVATE") {
+						$("#toggleSystemState").attr('checked', 'checked');
+                        $("#lblSystemState").text("[Đang hoạt động]");
+                        $("#lblSystemState").css("color", "green")
+					}
+					else if (myState == "IDLE") {
+						$("#toggleSystemState").removeAttr('checked', 'checked');
+                        $("#lblSystemState").text("[Không hoạt động]");
+                        $("#lblSystemState").css("color", "crimson");
+					}
+					else {
+						$("#toggleSystemState").removeAttr('checked', 'checked');
+                        $("#lblSystemState").text("[Không hoạt động]");
+                        $("#lblSystemState").css("color", "crimson");
+                    }
+                }
+                else {
+                    alert("fail loading text file")
+                }
+			});
+
+            //mặc định button toggle trạng thái RELAY là Enable
+            jQuery.get('RELAYSTATE.txt', function (data, status) {
+                if (status == "success") {
+                    console.log("load SYSTEMSTATE.txt success")
+                    var myState = data;
+                    console.log("System state = " + myState)
+
+                    if (myState == "ON") {
+						$("#toggleRelayState").attr('checked', 'checked');
+						$("#lblRelayState").text("[Đang hoạt động]");
+						$("#lblRelayState").css("color","green")
+                    }
+                    else if (myState == "OFF") {
+						$("#toggleRelayState").removeAttr('checked', 'checked');
+						$("#lblRelayState").text("[Không hoạt động]");
+                        $("#lblRelayState").css("color", "crimson");
+                    }
+                    else {
+						$("#toggleRelayState").removeAttr('checked', 'checked');
+						$("#lblRelayState").text("[Không hoạt động]");
+                        $("#lblRelayState").css("color", "crimson");
+                    }
+                }
+                else {
+                    alert("fail loading text file")
+                }
+            });
+			
+			
+			//xử lý sự kiện khi button toggle được click
+            $("#toggleSystemState").click(function () {
+                if ($("#toggleSystemState").prop('checked')) {
+					console.log("toggle = checked")
+                    $("#lblSystemState").text("[Đang hoạt động]");
+                    $("#lblSystemState").css("color", "green")
+                    var urlToggleSystemOnline = `http://192.168.4.1/ToggleSystem?isState=ACTIVATE`;
+                    $.get(urlToggleSystemOnline, function (data, status) {
+                        console.log("Data: " + data + "\nStatus: " + status);
+                        if (status = "success") {
+                            alert("Đã Kích hoạt trạng thái Hệ thống sang ACTIVE thành công");
+                        }
+                        else if (status = "error") {
+                            alert("Chuyển trạng thái không thành công, vui lòng thử lại");
+                        }
+                        else {
+                            console.log("Có lỗi xảy ra, vui lòng thử lại");
+                        }
+                    });
+                }
+                else {
+					console.log("toggle = unchecked")
+                    $("#lblSystemState").text("[Không hoạt động]");
+                    $("#lblSystemState").css("color", "crimson");
+                    var urlToggleSystemOffline = `http://192.168.4.1/ToggleSystem?isState=IDLE`;
+                    $.get(urlToggleSystemOffline, function (data, status) {
+                        console.log("Data: " + data + "\nStatus: " + status);
+                        if (status = "success") {
+                            alert("Đã Kích hoạt trạng thái Hệ thống sang OFFLINE thành công");
+                        }
+                        else if (status = "error") {
+                            alert("Chuyển trạng thái không thành công, vui lòng thử lại");
+                        }
+                        else {
+                            console.log("Có lỗi xảy ra, vui lòng thử lại");
+                        }
+                    });
+                }
+			})
+
+            //xử lý sự kiện khi button toggle được click
+            $("#toggleRelayState").click(function () {
+                if ($("#toggleRelayState").prop('checked')) {
+					console.log("toggle Relay = checked")
+                    $("#lblRelayState").text("[Đang hoạt động]");
+                    $("#lblRelayState").css("color", "green")
+                    var urlToggleRelayOnline = `http://192.168.4.1/setStateRelay?state=ON`;
+                    $.get(urlToggleRelayOnline, function (data, status) {
+                        console.log("Data: " + data + "\nStatus: " + status);
+                        if (status = "success") {
+                            alert("Đã Kích hoạt trạng thái Ngắt nguồn sang ACTIVE thành công");
+                        }
+                        else if (status = "error") {
+                            alert("Chuyển trạng thái không thành công, vui lòng thử lại");
+                        }
+                        else {
+                            console.log("Có lỗi xảy ra, vui lòng thử lại");
+                        }
+                    });
+                }
+                else {
+                    console.log("toggle Relay = unchecked")
+                    var urlToggleRelayOffline = `http://192.168.4.1/setStateRelay?state=OFF`;
+                    $("#lblRelayState").text("[Không hoạt động]");
+                    $("#lblRelayState").css("color", "crimson");
+                    $.get(urlToggleRelayOffline, function (data, status) {
+                        console.log("Data: " + data + "\nStatus: " + status);
+                        if (status = "success") {
+                            alert("Đã Kích hoạt trạng thái Ngắt nguồn sang OFFLINE thành công");
+                        }
+                        else if (status = "error") {
+                            alert("Chuyển trạng thái không thành công, vui lòng thử lại");
+                        }
+                        else {
+                            console.log("Có lỗi xảy ra, vui lòng thử lại");
+                        }
+                    });
+                }
+            })
+
+
+			//xử lý sự kiện khhi button RESET RELAY được click  
+            $("#btnResetRelay").click(function (e) {
+                console.log("reset relay is operating")
+                var urlResetRelay = `http://192.168.4.1/resetRelay?action=resetNow`;
+                $.get(urlResetRelay, function (data, status) {
+                    console.log("Data: " + data + "\nStatus: " + status);
+                    if (status = "success") {
+                        alert("Đã Kích hoạt lại động cơ thành công");
+                    }
+                    else if (status = "error") {
+                        alert("Kích hoạt thất bại");
+                    }
+                    else {
+                        console.log("Có lỗi xảy ra, vui lòng thử lại");
+                    }
+                });
+            })
+
+			//xử lý đếm sự kiện ZONE
+            jQuery.get('EVENT.txt', function (data, status) {
+                if (status == "success") {
+                    console.log("load EVENT success")
+                    var arr = data.split('|');
+					var z1 = 0;
+                    var z2 = 0;
+                    var z3 = 0;
+                    for (var i in arr) {
+                        getZone = arr[i].substring(arr[i].indexOf("Z="), arr[i].indexOf(",TID="))
+                        isZone = getZone.substr(getZone.indexOf("=") + 1);
+                        if (isZone == "1") {
+                            z1++;
+                        }
+                        if (isZone == "2") {
+                            z2++;
+                        }
+                        if (isZone == "3") {
+                            z3++;
+                        }
+                    }
+					$("#isZoneEvent1").val(z1);
+					$("#isZoneEvent2").val(z2);
+                    $("#isZoneEvent3").val(z3);
+                }
+                else {
+                    alert("fail loading text file")
+                }
+            });
+
+			// load thông tin file hệ thống SYS.TXT
+            jQuery.get('ZONEINFO.txt', function (data, status) {
+				if (status == "success") {
+                    //console.log("load ZONEINFO.txt success")
+                    let DZ1, DZ1Val
+					var myInfo = data;
+                    //console.log("Zone info= " + myInfo)
+
+                    //get DZ1 distance
+                    DZ1 = myInfo.substring(myInfo.indexOf("DZ1="), myInfo.indexOf(",DZ2="))   
+					DZ1Val = DZ1.substr(DZ1.indexOf("=") + 1);   
+                    SZ1 = myInfo.substring(myInfo.indexOf("SZ1="), myInfo.indexOf(",SZ2="))   
+                    SZ1Val = SZ1.substr(SZ1.indexOf("=") + 1);    
+					//console.log("DZ1=" + DZ1Val + " sz1=" + SZ1Val);
+
+                    //get DZ2 distance
+                    DZ2 = myInfo.substring(myInfo.indexOf("DZ2="), myInfo.indexOf(",DZ3="))   
+					DZ2Val = DZ2.substr(DZ2.indexOf("=") + 1);
+                    SZ2 = myInfo.substring(myInfo.indexOf("SZ2="), myInfo.indexOf(",SZ3="))
+                    SZ2Val = SZ2.substr(SZ2.indexOf("=") + 1);
+                    //console.log("DZ2=" + DZ2Val + " sz2=" + SZ2Val)
+
+                    //get DZ3 distance
+                    DZ3 = myInfo.substring(myInfo.indexOf("DZ3="), myInfo.indexOf(",SZ1="))   
+					DZ3Val = DZ3.substr(DZ3.indexOf("=") + 1);
+                    SZ3Val = myInfo.substring(myInfo.indexOf("SZ3=") + 4)
+                    //console.log("DZ3=" + DZ3Val + " sz3=" + SZ3Val)
+
+					$('#idDistanceValZone1 option:selected').text(DZ1Val + " mm");
+					$('#idDistanceValZone1 option:selected').val(DZ1Val);
+                    $('#idSirentValZone1 option:selected').text("Âm " + SZ1Val);
+                    $('#idSirentValZone1 option:selected').val(SZ1Val);
+
+                    $('#idDistanceValZone2 option:selected').text(DZ2Val + " mm");
+					$('#idDistanceValZone2 option:selected').val(DZ2Val);
+                    $('#idSirentValZone2 option:selected').text("Âm " + SZ2Val);
+                    $('#idSirentValZone2 option:selected').val(SZ2Val);
+
+                    $('#idDistanceValZone3 option:selected').text(DZ3Val + " mm");
+					$('#idDistanceValZone3 option:selected').val(DZ3Val);
+                    $('#idSirentValZone3 option:selected').text("Âm " + SZ3Val);
+                    $('#idSirentValZone3 option:selected').val(SZ3Val);
+
+				}
+				else {
+					alert("fail loading text file")
+				}
+			});
+
+						
+			// button update WiFi SSID and Password is clicked
+			$("#btnUpdateWiFi").click(function (e) {
+				e.preventDefault();
+				if ($('#idWifiSsid').val() == "") {
+					alert("Vui lòng nhập WiFi SSID mới.");
+					return false;
+				} else if ($('#idWifiPassword').val() == "") {
+					alert("Vui lòng nhập WiFi password mới.");
+					return false;
+				} else if ($('#idWifiPassword').val().length < 8) {
+                    alert("Mật khẩu phải đủ 8 kí tự");
+                    return false;
+                }
+				else {
+					var mySSID = $('#idWifiSsid').val();
+					var myPassword = $('#idWifiPassword').val();
+					var urlSketch = `http://192.168.4.1/getWiFiInfo?mySsid=${mySSID},myPassword=${myPassword}`;
+					//console.log(urlSketch);
+					$.get(urlSketch, function (data, status) {
+						console.log("Data: " + data + "\nStatus: " + status);
+						if (status = "success") {
+							alert("Đạ cập nhật WiFi, Vui lòng đợi thiết bị khởi động lại");
+						}
+						else if (status = "error") {
+							alert("Cập nhật WiFi không thành công, vui lòng thử lại");
+						}
+						else {
+                            alert("Có lỗi xảy ra, vui lòng thử lại");
+                        }
+					});
+					
+				}
+			});
+						
+			// button cập nhật thông tin ZONE
+			$("#btnUpdateZoneInfo").click(function (e) {
+				e.preventDefault();
+					var myZ1 = $('#idDistanceValZone1 option:selected').val();
+					var myZ2 = $('#idDistanceValZone2 option:selected').val();
+					var myZ3 = $('#idDistanceValZone3 option:selected').val();
+					var mySirenZ1 = $('#idSirentValZone1 option:selected').val();
+					var mySirenZ2 = $('#idSirentValZone2 option:selected').val();
+					var mySirenZ3 = $('#idSirentValZone3 option:selected').val();
+					var urlSketchZone = `http://192.168.4.1/getZoneInfo?Zone1=${myZ1},DZ2=${myZ2},DZ3=${myZ3},SZ1=${mySirenZ1},SZ2=${mySirenZ2},SZ3=${mySirenZ3}`;
+					//console.log(urlSketchZone);
+
+                $.get(urlSketchZone, function (data, status) {
+                        console.log("Data: " + data + "\nStatus: " + status);
+                        if (status = "success") {
+                            alert("Đạ cập nhật Zone thành công, Vui lòng đợi thiết bị khởi động lại");
+                        }
+                        else if (status = "error") {
+                            alert("Cập nhật thông tin Zone không thành công, vui lòng thử lại");
+                        }
+                        else {
+                            alert("Có lỗi xảy ra, vui lòng thử lại");
+                        }
+					});
+			});
+			
+			// button udpate System time is clicked
+			$("#btnUpdateSystemTime").click(function (e) {
+				e.preventDefault();
+				var myNewTime = $('#idSystemTime').val();
+				//console.log("time đã format= ", myNewTime)
+				if ($('#idSystemTime').val() == "") {
+					alert("Vui lòng nhập giờ hệ thống mới.");
+					return false;
+				} else {
+					var urlTimeSketch = `http://192.168.4.1/getSystemTime?mySystemTime=${myNewTime}`;
+					console.log(urlTimeSketch);
+					$.get(urlTimeSketch, function (data, status) {
+                        console.log("Data: " + data + "\nStatus: " + status);
+                        if (status = "success") {
+                            alert("Đạ cập nhật Thời gian thành công, Vui lòng đợi thiết bị khởi động lại");
+                        }
+                        else if (status = "error") {
+                            alert("Cập nhật thời gian không thành công, vui lòng thử lại");
+                        }
+                        else {
+                            alert("Có lỗi xảy ra, vui lòng thử lại");
+                        }
+					});
+				}
+			});
+
+            $(function () {
+                $('#idSlSystemTime').datetimepicker({
+                    format: 'DD/MM/YYYY HH:mm:ss',
+                    minDate: new Date()
+                });
+            });
+
+			
+			//gọi trang xem lịch sử Zone 1
+            $("#btnviewEvent1").click(function (e) {
+				e.preventDefault();
+				window.location.href = "History-1.html";
+			});
+            //gọi trang xem lịch sử Zone 2
+            $("#btnviewEvent2").click(function (e) {
+                e.preventDefault();
+                window.location.href = "History-2.html";
+			});
+            //gọi trang xem lịch sử Zone 3
+            $("#btnviewEvent3").click(function (e) {
+                e.preventDefault();
+                window.location.href = "History-3.html";
+			});
+
+
+		});   //$document
+
+	</script>
+
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<h3 class="fontuse">PEDESTRIAN WARNING SYSTEM</h3>
+				<h4 class="fontuse">Model: PWS-101C</h4>
+				<h5 class="fontuse">Mã thiết bị: <span style="font-weight: bold; font-weight: bold; background-color: khaki; padding: 3px 5px;">%STATE%</span></h5>
+				<br />
+
+				<!-- toggle chọn trạng thái hoạt động của hệ thống -->
+				<div class="lineSepa"></div>
+				<div class="pd510" style="height:auto;">
+					<p class="fontuse displayInline" style="margin-right:15px">- Hoạt động của hệ thống: </p>
+					<label class="switch">
+						<input type="checkbox" id="toggleSystemState">
+						<span class="slider round"></span>
+					</label>
+					<p class="fontuse displayInline" id="lblSystemState" style="margin-left:15px">...</p>
+				</div>
+
+				<!-- toggle chọn trạng thái hoạt động của Relay ngắt động cơ-->
+				<div class="lineSepa"></div>
+				<div class="pd510" style="height:auto;">
+					<p class="fontuse displayInline" style="margin-right:15px">- Hoạt động ngắt động cơ: </p>
+					<label class="switch">
+						<input type="checkbox" id="toggleRelayState">
+						<span class="slider round"></span>
+					</label>
+					<p class="fontuse displayInline" id="lblRelayState" style="margin-left:15px">...</p>
+				</div>
+
+				<!----button Kích hoạt lại động cơ-->
+				<div class="lineSepa"></div>
+				<div class="pd510" style="height:auto;">
+					<p class="fontuse displayInline" style="margin-right:15px">- Kích hoạt lại động cơ: </p>
+					<input type="button" id="btnResetRelay" class="btn btn-md btn-danger mr10" disabled="disabled" value="Kích hoạt">
+					<p class="fontuse displayInline" style="margin-left:15px"> == Không hỗ trợ phiên bản này ==</p>
+				</div>
+				<div class="lineSepa"></div>
+
+				<!----Session: CẤU HÌNH ZONE-->
+				<div class="col-lg-12  col-md-12 col-sm-12 col-xs-12">
+					<h3>Cấu hình Zone</h3>
+					<br>
+					<div class="col-lg-9  col-md-9 col-sm-9 col-xs-12">
+						<div class="pd510" style="height:auto; display: inline-flex;">
+							<p class="fontuse displayInline" style="margin-right: 15px;">- Zone 1 (cut engine): </p>
+							<div style="width:130px; margin-right: 15px;">
+								<select class="form-control" id="idDistanceValZone1">
+									<option value="1000">1000 mm</option>
+									<option value="1000">1000 mm</option>
+									<option value="1500">1500 mm</option>
+									<option value="2000">2000 mm</option>
+									<option value="2500">2500 mm</option>
+									<option value="3000">3000 mm</option>
+									<option value="3500">3500 mm</option>
+									<option value="4000">4000 mm</option>
+									<option value="4500">4500 mm</option>
+									<option value="5000">5000 mm</option>
+								</select>
+							</div>
+							<p class="fontuse displayInline" style="margin-right: 15px;"> Chọn alarm: </p>
+							<div style="width:130px; margin-right: 15px;;">
+								<select class="form-control" id="idSirentValZone1">
+									<option value="0">Tắt âm</option>
+									<option value="0">Tắt âm</option>
+									<option value="1">Âm 1</option>
+									<option value="2">Âm 2</option>
+									<option value="3">Âm 3</option>
+									<option value="4">Âm 4</option>
+									<option value="5">Âm 5</option>
+								</select>
+							</div>
+						</div>
+						<br>
+						<div class="lineSepa"></div>
+
+						<div class="pd510" style="height:auto; display: inline-flex;">
+							<p class="fontuse displayInline" style="margin-right: 30px;">- Zone 2 (warning): </p>
+							<div style="width:130px; margin-right: 15px;;">
+								<select class="form-control" id="idDistanceValZone2">
+									<option value="1000">1000 mm</option>
+									<option value="1000">1000 mm</option>
+									<option value="1500">1500 mm</option>
+									<option value="2000">2000 mm</option>
+									<option value="2500">2500 mm</option>
+									<option value="3000">3000 mm</option>
+									<option value="3500">3500 mm</option>
+									<option value="4000">4000 mm</option>
+									<option value="4500">4500 mm</option>
+									<option value="5000">5000 mm</option>
+								</select>
+							</div>
+							<p class="fontuse displayInline" style="margin-right: 15px;"> Chọn alarm: </p>
+							<div style="width:130px; margin-right: 15px;;">
+								<select class="form-control" id="idSirentValZone2">
+									<option value="0">Tắt âm</option>
+									<option value="0">Tắt âm</option>
+									<option value="1">Âm 1</option>
+									<option value="2">Âm 2</option>
+									<option value="3">Âm 3</option>
+									<option value="4">Âm 4</option>
+									<option value="5">Âm 5</option>
+								</select>
+							</div>
+							<!-- <input type="button" class="btn btn-md btn-info mr10" value="Cập nhật" id="btnUpdateZone1"> -->
+						</div>
+						<br>
+						<div class="lineSepa"></div>
+
+						<div class="pd510" style="height:auto; display: inline-flex;">
+							<p class="fontuse displayInline" style="margin-right: 30px;">- Zone 3 (warning): </p>
+							<div style="width:130px; margin-right: 15px;;">
+								<select class="form-control" id="idDistanceValZone3">
+									<option value="1000">1000 mm</option>
+									<option value="1000">1000 mm</option>
+									<option value="1500">1500 mm</option>
+									<option value="2000">2000 mm</option>
+									<option value="2500">2500 mm</option>
+									<option value="3000">3000 mm</option>
+									<option value="3500">3500 mm</option>
+									<option value="4000">4000 mm</option>
+									<option value="4500">4500 mm</option>
+									<option value="5000">5000 mm</option>
+								</select>
+							</div>
+							<p class="fontuse displayInline" style="margin-right: 15px;"> Chọn alarm: </p>
+							<div style="width:130px; margin-right: 15px;;">
+								<select class="form-control" id="idSirentValZone3">
+									<option value="0">Tắt âm</option>
+									<option value="0">Tắt âm</option>
+									<option value="1">Âm 1</option>
+									<option value="2">Âm 2</option>
+									<option value="3">Âm 3</option>
+									<option value="4">Âm 4</option>
+									<option value="5">Âm 5</option>
+								</select>
+							</div>
+						</div>
+						<br>
+						<div class="lineSepa"></div>
+						<br />
+						<input type="button" class="btn btn-md btn-info mr10" value="Cập nhật" id="btnUpdateZoneInfo">
+					</div>
+
+					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+						<img src="ZoneImage.jpg" style="width:100%" />
+					</div>
+				</div>
+				<br>
+
+				<!----Session: LỊCH SỬ TƯƠNG TÁC-->
+				<div class="col-lg-12  col-md-12 col-sm-12 col-xs-12">
+					<h3>Xem lịch sử tương tác Zone</h3>
+					<br>
+
+					<div class="pd510" style="height:auto;">
+						<p class="fontuse displayInline" style="margin-right:15px">- Lịch sử Zone 1: </p>
+						<input type="text" class="form-input inputShowValue" min="0" max="200" id="isZoneEvent1" name="isZoneEvent1" disabled>
+						<input type="button" id="btnviewEvent1" class="btn btn-md btn-warning mr10" value="Xem">
+					</div>
+
+					<div class="lineSepa"></div>
+
+					<div class="pd510" style="height:auto;">
+						<p class="fontuse displayInline" style="margin-right:15px">- Lịch sử Zone 2: </p>
+						<input type="text" class="form-input inputShowValue" min="0" max="200" id="isZoneEvent2" name="isZoneEvent2" disabled>
+						<input type="button" id="btnviewEvent2" class="btn btn-md btn-warning mr10" value="Xem">
+					</div>
+
+					<div class="lineSepa"></div>
+
+					<div class="pd510" style="height:auto;">
+						<p class="fontuse displayInline" style="margin-right:15px">- Lịch sử  Zone 3: </p>
+						<input type="text" class="form-input inputShowValue" min="0" max="200" id="isZoneEvent3" name="isZoneEvent3" disabled>
+						<input type="button" id="btnviewEvent3" class="btn btn-md btn-warning mr10" value="Xem">
+					</div>
+
+					<div class="lineSepa" style="margin-top:15px;"></div>
+				</div>
+
+				<br>
+
+				<!----Session: CẬP NHẬT WIFI-->
+				<div class="col-lg-12  col-md-12 col-sm-12 col-xs-12">
+					<h3>Cập nhật thông tin kết nối WiFi</h3>
+					<br>
+					<p class="fontuse">- WiFi SSID hiện tại: <strong style="font-weight: bold; background-color: cornsilk; padding: 5px 8px; margin-left: 29px; ">%currentValueWifiSSID%</strong></p>
+					<div class="form-inline" style="margin-top:5px">
+						<p class="fontuse displayInline" style="margin-right: 50px;	">- WiFi SSID mới:</p>
+						<input class="form-control" type="text" id="idWifiSsid" value="" placeholder="nhập SSID mới" />
+					</div>
+					<br>
+					<p class="fontuse">- WiFi Password hiện tại: <strong style="font-weight: bold; background-color: cornsilk; padding: 5px 8px;">%currentValueWifiPassword%</strong></p>
+					<div class="form-inline" style="margin-top:5px">
+						<p class="fontuse displayInline" style="margin-right: 23px" ;>- WiFi password mới:</p>
+						<input class="form-control" type="text" id="idWifiPassword" value="" placeholder="nhập Password mới" />
+					</div>
+					<br>
+					<input type="button" class="btn btn-primary" id="btnUpdateWiFi" value="Cập nhật" />
+
+					<div class="lineSepa" style="margin-top:15px;"></div>
+				</div>
+
+				<br />
+
+				<!----Session: CẬP NHẬT GIỜ HỆ THỐNG-->
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<h3>Cập nhật giờ hệ thống</h3>
+					<br>
+					<div class="form-inline" style="margin-top:5px">
+						<p class="fontuse displayInline" style="margin-right: 50px;	">- Chọn thời gian:</p>
+						<div class='input-group' id="idSlSystemTime">
+							<input type='text' id="idSystemTime" class="form-control" />
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
+					<br>
+					<input type="button" class="btn btn-primary" id="btnUpdateSystemTime" value="Cập nhật" />
+					<br />
+					<div class="lineSepa" style="margin-top:15px;"></div>
+				</div>
+
+				<br />
+
+			</div>
+		</div>
+	</div>
+	<iframe style="display:none" name="hidden-form"></iframe>
+	
+</body>
+</html>
