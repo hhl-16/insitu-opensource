@@ -1,0 +1,574 @@
+*************************************************************
+FileName = proximity_kt.GBR
+AutoAperture = True
+*************************************************************
+Generating : Drill Drawing
+      File : proximity_kt.GD1
+
+    Adding Drill Pair : Top Layer-Bottom Layer
+
+    Adding Layer      : Drill Drawing
+
+
+Used DCodes :
+    D126
+    D131
+    D132
+*************************************************************
+
+*************************************************************
+Generating : Drill Guide
+      File : proximity_kt.GG1
+
+    Adding Drill Pair : Top Layer-Bottom Layer
+
+    Adding Layer      : Drill Guide
+
+
+Used DCodes :
+    D126
+*************************************************************
+
+*************************************************************
+Generating : Bottom Pad Master
+      File : proximity_kt.GPB
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D25
+    D33
+    D84
+    D85
+    D86
+    D87
+    D88
+    D89
+    D90
+    D91
+    D92
+    D93
+    D94
+    D95
+    D96
+    D97
+    D98
+    D104
+    D105
+    D106
+    D107
+    D108
+    D109
+    D110
+    D111
+    D112
+    D113
+*************************************************************
+
+*************************************************************
+Generating : Top Assembly
+      File : proximity_kt.GM8
+
+    Adding Layer      : Top Assembly
+
+
+Used DCodes :
+    D10
+*************************************************************
+
+*************************************************************
+Generating : Top Pad Master
+      File : proximity_kt.GPT
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D22
+    D23
+    D24
+    D25
+    D26
+    D28
+    D29
+    D30
+    D31
+    D32
+    D33
+    D34
+    D35
+    D36
+    D37
+    D38
+    D39
+    D40
+    D41
+    D42
+    D80
+    D84
+    D85
+    D86
+    D87
+    D88
+    D89
+    D90
+    D91
+    D92
+    D93
+    D94
+    D95
+    D96
+    D97
+    D98
+*************************************************************
+
+*************************************************************
+Generating : Bottom Layer
+      File : proximity_kt.GBL
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D12
+    D25
+    D33
+    D81
+    D82
+    D83
+    D84
+    D85
+    D86
+    D87
+    D88
+    D89
+    D90
+    D91
+    D92
+    D93
+    D94
+    D95
+    D96
+    D97
+    D98
+    D99
+    D100
+    D101
+    D102
+    D103
+    D104
+    D105
+    D106
+    D107
+    D108
+    D109
+    D110
+    D111
+    D112
+    D113
+*************************************************************
+
+*************************************************************
+Generating : Mechanical 1
+      File : proximity_kt.GM1
+
+    Adding Layer      : Mechanical 1
+
+
+Used DCodes :
+    D124
+*************************************************************
+
+*************************************************************
+Generating : Bottom Assembly
+      File : proximity_kt.GM20
+
+    Adding Layer      : Bottom Assembly
+
+
+Used DCodes :
+    D10
+*************************************************************
+
+*************************************************************
+Generating : Top Paste
+      File : proximity_kt.GTP
+
+    Adding Layer      : Top Paste
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D22
+    D23
+    D24
+    D25
+    D26
+    D27
+    D28
+    D29
+    D30
+    D31
+    D32
+    D33
+    D34
+    D35
+    D36
+    D37
+    D38
+    D39
+    D40
+    D41
+    D42
+*************************************************************
+
+*************************************************************
+Generating : Bottom Overlay
+      File : proximity_kt.GBO
+
+    Adding Layer      : Bottom Overlay
+
+
+Used DCodes :
+    D10
+    D11
+    D12
+    D15
+    D16
+    D18
+    D123
+*************************************************************
+
+*************************************************************
+Generating : Top Courtyard
+      File : proximity_kt.GM15
+
+    Adding Layer      : Top Courtyard
+
+
+Used DCodes :
+    D10
+    D12
+    D125
+    D127
+    D129
+    D130
+*************************************************************
+
+*************************************************************
+Generating : Top 3D Body
+      File : proximity_kt.GM13
+
+    Adding Layer      : Top 3D Body
+
+
+Used DCodes :
+    D10
+    D12
+    D18
+    D125
+    D126
+    D127
+    D128
+*************************************************************
+
+*************************************************************
+Generating : Mechanical 2
+      File : proximity_kt.GM2
+
+    Adding Layer      : Mechanical 2
+
+
+Used DCodes :
+*************************************************************
+
+*************************************************************
+Generating : Mechanical 3
+      File : proximity_kt.GM3
+
+    Adding Layer      : Mechanical 3
+
+
+Used DCodes :
+*************************************************************
+
+*************************************************************
+Generating : Top Overlay
+      File : proximity_kt.GTO
+
+    Adding Layer      : Top Overlay
+
+
+Used DCodes :
+    D10
+    D11
+    D12
+    D13
+    D14
+    D15
+    D16
+    D17
+    D18
+    D19
+    D20
+    D21
+*************************************************************
+
+*************************************************************
+Generating : Bottom Solder
+      File : proximity_kt.GBS
+
+    Adding Layer      : Bottom Solder
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D46
+    D54
+    D63
+    D64
+    D65
+    D66
+    D67
+    D68
+    D69
+    D70
+    D71
+    D72
+    D73
+    D74
+    D75
+    D76
+    D77
+    D78
+    D79
+    D112
+    D114
+    D115
+    D116
+    D117
+    D118
+    D119
+    D120
+    D121
+    D122
+*************************************************************
+
+*************************************************************
+Generating : Bottom 3D Body
+      File : proximity_kt.GM14
+
+    Adding Layer      : Bottom 3D Body
+
+
+Used DCodes :
+    D10
+    D125
+    D129
+*************************************************************
+
+*************************************************************
+Generating : Top Layer
+      File : proximity_kt.GTL
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D12
+    D22
+    D23
+    D24
+    D25
+    D26
+    D28
+    D29
+    D30
+    D31
+    D32
+    D33
+    D34
+    D35
+    D36
+    D37
+    D38
+    D39
+    D40
+    D41
+    D42
+    D80
+    D81
+    D82
+    D83
+    D84
+    D85
+    D86
+    D87
+    D88
+    D89
+    D90
+    D91
+    D92
+    D93
+    D94
+    D95
+    D96
+    D97
+    D98
+    D99
+    D100
+    D101
+    D102
+    D103
+*************************************************************
+
+*************************************************************
+Generating : Top Solder
+      File : proximity_kt.GTS
+
+    Adding Layer      : Top Solder
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D42
+    D43
+    D44
+    D45
+    D46
+    D47
+    D48
+    D49
+    D50
+    D51
+    D52
+    D53
+    D54
+    D55
+    D56
+    D57
+    D58
+    D59
+    D60
+    D61
+    D62
+    D63
+    D64
+    D65
+    D66
+    D67
+    D68
+    D69
+    D70
+    D71
+    D72
+    D73
+    D74
+    D75
+    D76
+    D77
+    D78
+    D79
+*************************************************************
+
+*************************************************************
+Generating : Bottom Component Center
+      File : proximity_kt.GM24
+
+    Adding Layer      : Bottom Component Center
+
+
+Used DCodes :
+    D125
+*************************************************************
+
+*************************************************************
+Generating : Top Component Center
+      File : proximity_kt.GM10
+
+    Adding Layer      : Top Component Center
+
+
+Used DCodes :
+    D125
+*************************************************************
+
+*************************************************************
+Generating : Keep-Out Layer
+      File : proximity_kt.GKO
+
+    Adding Layer      : Keep-Out Layer
+
+
+Used DCodes :
+*************************************************************
+
+*************************************************************
+Generating : Mechanical 4
+      File : proximity_kt.GM4
+
+    Adding Layer      : Mechanical 4
+
+
+Used DCodes :
+*************************************************************
+
+*************************************************************
+Generating : Bottom Courtyard
+      File : proximity_kt.GM16
+
+    Adding Layer      : Bottom Courtyard
+
+
+Used DCodes :
+    D10
+    D18
+    D99
+    D125
+    D129
+*************************************************************
+
+*************************************************************
+Generating : Bottom Paste
+      File : proximity_kt.GBP
+
+    Adding Layer      : Bottom Paste
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D25
+    D33
+    D104
+    D105
+    D106
+    D107
+    D108
+    D109
+    D110
+    D111
+    D112
+    D113
+*************************************************************
+

@@ -1,0 +1,12 @@
+Output: NC Drill Files
+Type  : NC Drill
+From  : Project [Approxi.PrjPcb]
+   Generated File[proximity_kt.TXT]
+   Generated File[proximity_kt.LDP]
+   Generated File[proximity_kt.DRR]
+
+
+Files Generated   : 3
+Documents Printed : 0
+
+Finished Output Generation At 11:54:52 PM On 1/4/2023
