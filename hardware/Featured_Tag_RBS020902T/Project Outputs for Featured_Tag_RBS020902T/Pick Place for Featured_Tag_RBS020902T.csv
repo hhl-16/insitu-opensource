@@ -1,0 +1,50 @@
+Altium Designer Pick and Place Locations
+F:\SVN1\[R&D] UWB Decawave\Release\Hardware_product\Featured_Tag_RBS020902T\Project Outputs for Featured_Tag_RBS020902T\Pick Place for Featured_Tag_RBS020902T.csv
+
+========================================================================================================================
+File Design Information:
+
+Date:       06/01/23
+Time:       10:01
+Revision:   Not in VersionControl
+Variant:    No variations
+Units used: mm
+
+"Designator","Comment","Layer","Footprint","Center-X(mm)","Center-Y(mm)","Rotation"
+"C6","4.7uF","TopLayer","FP-0603-L_1_6_0_15-W_0_81-MFG","11.0250","26.9750","90"
+"BT1","CR2032","TopLayer","FP-S8421-45R-MFG","27.3250","19.6500","0"
+"Y1","8MHz","BottomLayer","FP-7M-MFG","17.2000","28.2750","90"
+"WS1","RBS020902T","BottomLayer","RBS020902T","26.6500","7.3500","360"
+"U3","MAX17043G+T","TopLayer","FP-T823-1-MFG","39.2750","14.5750","90"
+"U2","DWM1000","BottomLayer","DECW-DWM1000-24_V","31.8000","20.8975","180"
+"U1","STM32F103C8T6","BottomLayer","STM-LQFP48_L","17.4000","18.3750","270"
+"SW1","MSK-12C02","TopLayer","sw_msk_12c02","20.7250","35.5250","180"
+"R11","1K","BottomLayer","tro_smd_0603","17.7513","10.6750","90"
+"R10","1K","BottomLayer","tro_smd_0603","19.3425","10.6750","90"
+"R9","1K","BottomLayer","tro_smd_0603","20.9338","10.6750","90"
+"R8","10k","BottomLayer","tro_smd_0603","11.4500","15.0000","90"
+"R7","10k","BottomLayer","tro_smd_0603","22.6500","10.6750","90"
+"R6","10k","TopLayer","tro_smd_0603","13.5250","26.0750","0"
+"R5","10k","BottomLayer","tro_smd_0603","21.6250","27.1000","270"
+"R4","1k","TopLayer","tro_smd_0603","35.7250","10.6500","270"
+"R3","4.7K","TopLayer","tro_smd_0603","41.7250","16.7750","90"
+"R2","1k","TopLayer","tro_smd_0603","41.7250","13.4750","90"
+"R1","4.7","BottomLayer","tro_smd_0603","10.7750","21.4500","270"
+"Q1","HF","BottomLayer","SOT23","33.7000","6.9500","360"
+"LS1","ST-0402-BUZZER","TopLayer","FP-ST-0402T-MFG","33.0500","6.3250","180"
+"L1","LED 3528","BottomLayer","LED_RGB_3528","18.0750","7.3738","180"
+"D1","LL4148","BottomLayer","SOD-80","34.0250","11.7750","360"
+"C13","100nF","TopLayer","FP-0603-L_1_6_0_15-W_0_81-MFG","13.5974","27.8250","180"
+"C12","12pF","BottomLayer","FP-0603-L_1_6_0_15-W_0_81-MFG","19.9500","28.2000","270"
+"C11","12pF","BottomLayer","FP-0603-L_1_6_0_15-W_0_81-MFG","14.4250","28.1750","270"
+"C10","100nF","BottomLayer","FP-0603-L_1_6_0_15-W_0_81-MFG","41.2000","20.0250","360"
+"C9","10uF","BottomLayer","FP-0603-L_1_6_0_15-W_0_81-MFG","41.2000","18.1750","360"
+"C8","10nF","TopLayer","FP-0603-L_1_6_0_15-W_0_81-MFG","37.3000","10.6500","270"
+"C7","1uF","TopLayer","FP-0603-L_1_6_0_15-W_0_81-MFG","38.9250","10.6250","90"
+"C5","100nF","BottomLayer","FP-0603-L_1_6_0_15-W_0_81-MFG","13.5750","24.5000","180"
+"C4","100nF","BottomLayer","FP-0603-L_1_6_0_15-W_0_81-MFG","12.4750","28.1750","90"
+"C3","100nF","BottomLayer","FP-0603-L_1_6_0_15-W_0_81-MFG","16.1500","10.6500","90"
+"C2","100nF","BottomLayer","FP-0603-L_1_6_0_15-W_0_81-MFG","23.0000","14.1250","90"
+"C1","100pF","BottomLayer","FP-0603-L_1_6_0_15-W_0_81-MFG","33.9000","9.8250","360"
+"*2","JP 1x3 1.27mm","TopLayer","JP_1x3_1.27mm","18.6050","5.4000","360"
+"*1","JP 1x7 1.27mm","TopLayer","JP_1x4_1.27mm","13.4150","5.3750","360"

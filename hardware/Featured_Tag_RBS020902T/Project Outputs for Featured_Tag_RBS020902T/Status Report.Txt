@@ -1,0 +1,11 @@
+Output: Generates pick and place files
+Type  : Pick Place
+From  : Variant [[No Variations]] of Project [Featured_Tag_RBS020902T.PrjPCB]
+   Generated File[Pick Place for Featured_Tag_RBS020902T.txt]
+   Generated File[Pick Place for Featured_Tag_RBS020902T.csv]
+
+
+Files Generated   : 2
+Documents Printed : 0
+
+Finished Output Generation At 10:01:18 AM On 1/6/2023
