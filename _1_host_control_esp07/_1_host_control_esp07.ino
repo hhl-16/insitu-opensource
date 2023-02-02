@@ -311,7 +311,14 @@ void setupwifi() {
     request->send(200, "text/plain", "Cập nhật rssi thành công");
   });
   //----------------------------------------
-
+  //DELETE FLASH
+//  http://192.168.4.1/deletehistory?value=yes
+  server.on("/deletehistory", HTTP_GET, [](AsyncWebServerRequest * request)
+  {
+    LittleFS.remove("/EVENT.txt");    
+    request->send(200, "text/plain", "delete flash thành công");
+    ESP.restart();
+  });
 
   AsyncElegantOTA.begin(&server);    // Start ElegantOTA
   server.begin();
